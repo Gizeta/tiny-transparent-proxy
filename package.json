@@ -1,0 +1,23 @@
+{
+  "name": "tiny-transparent-proxy",
+  "version": "1.0.0",
+  "description": "just a toy",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Gizeta/tiny-transparent-proxy.git"
+  },
+  "author": "Gizeta",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Gizeta/tiny-transparent-proxy/issues"
+  },
+  "homepage": "https://github.com/Gizeta/tiny-transparent-proxy#readme",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "http-auth": "^3.2.3"
+  }
+}

@@ -37,4 +37,4 @@ http.createServer(basic, (req, res) => {
 
   res.writeHead(404);
   res.end();
-}).listen(80);
+}).listen(config.port);

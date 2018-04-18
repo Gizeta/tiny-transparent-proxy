@@ -1,6 +1,7 @@
 const http = require('http');
+const https = require('https');
+const url = require('url');
 const auth = require('http-auth');
-const axios = require('axios');
 const config = require('./config');
 
 const basic = auth.basic({
@@ -17,19 +18,20 @@ http.createServer(basic, (req, res) => {
       reqChunks.push(chunk);
     });
 
-    req.on('end', async () => {
+    req.on('end', () => {
       let reqBody = JSON.parse(Buffer.concat(reqChunks));
-      
-      axios({
-        method: reqBody.data ? 'post' : 'get',
-        url: reqBody.url,
+      let { protocol, host, path } = url.parse(reqBody.url);
+
+      (protocol === 'https:' ? https : http).request({
+        host,
+        path,
+        method: reqBody.data ? 'POST' : 'GET',
         headers: reqBody.headers,
-        data: reqBody.data,
-        responseType: 'stream',
-      }).then((response) => {
-        res.writeHead(response.status, response.headers);
-        response.data.pipe(res);
-      });
+      }, response => {
+        response.pause();
+        res.writeHead(response.statusCode, response.headers);
+        response.pipe(res, {end: true});
+      }).end(reqBody.data);
     });
 
     return;
